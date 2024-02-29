@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.lab4ws.soa.com/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+                  name="AdditionalService" targetNamespace="http://service.lab4ws.soa.com/">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="test.namespace" version="1.0">
+
+            <xs:element name="return" type="xs:long"/>
+
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.lab4ws.soa.com/" xmlns:ns1="test.namespace" elementFormDefault="unqualified" targetNamespace="http://service.lab4ws.soa.com/" version="1.0">
+
+            <xs:import namespace="test.namespace"/>
+
+            <xs:element name="countTransferred" type="tns:countTransferred"/>
+
+            <xs:element name="countTransferredResponse" type="tns:countTransferredResponse"/>
+
+            <xs:complexType name="countTransferred">
+                <xs:sequence/>
+            </xs:complexType>
+
+            <xs:complexType name="countTransferredResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns1:return"/>
+                </xs:sequence>
+            </xs:complexType>
+
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="countTransferred">
+        <wsdl:part element="tns:countTransferred" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="countTransferredResponse">
+        <wsdl:part element="tns:countTransferredResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="AdditionalWSI">
+        <wsdl:operation name="countTransferred">
+            <wsdl:input message="tns:countTransferred" name="countTransferred">
+            </wsdl:input>
+            <wsdl:output message="tns:countTransferredResponse" name="countTransferredResponse">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="AdditionalServiceSoapBinding" type="tns:AdditionalWSI">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="countTransferred">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="countTransferred">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="countTransferredResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="AdditionalService">
+        <wsdl:port binding="tns:AdditionalServiceSoapBinding" name="AdditionalPort">
+            <soap:address location="http://localhost:8080/lab4-ws-1.0-SNAPSHOT/Additional"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
